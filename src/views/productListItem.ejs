@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <title>Admin - ECommerce</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+        <% include admin-header %>
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <% product.forEach(function(row){ %>
+        <div class="col-sm-4">
+            <div class="well">
+                
+                
+                    <img src="<%= row.picture %>" alt="row.name" height="200" width="200" class="img-responsive center-block">
+                    <h4><span class="fa fa-times"></span><%= row.name %><span class="fa fa-times"></span></h4>
+                    <p>
+                        <strong>Price</strong>: <%= row.price %><br>
+                        <strong>Stock</strong>: <%= row.stock %><br>
+                        <strong>Discount</strong>: <%= row.discount %><br>
+                        <strong>tags</strong>: <%= row.tags %>
+                    </p>        
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
+</body>
+</html>

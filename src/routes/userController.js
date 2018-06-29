@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../model/user.model')
 
 exports.signUp = function(req, res){
-    console.log('req.body')
+    //console.log('req.body')
     User.findOne({email: req.body.email})
     .exec()
     .then(function(user){
@@ -25,7 +25,7 @@ exports.signUp = function(req, res){
                         isAdmin: req.body.isAdmin
                     })
                     user.save().then(function(result){
-                        console.log(result)
+                        //console.log(result)
                         res.redirect('/user/signin')
                         //res.status(200).json({
                         //    success: 'New user has been created'
@@ -54,7 +54,7 @@ exports.signIn = function(req, res){
             //    failed: "invalid email"
             //})
         }
-        console.log(user)
+        //console.log(user)
         bcrypt.compare(req.body.password, user.password, function(err, result){
             if(err){
                 res.render('login.ejs', { message: 'Unauthorized access' })
@@ -96,7 +96,7 @@ exports.signIn = function(req, res){
 exports.profile = function(req, res){
     const user = req.user
     // user.token = req.token
-    console.log(user)
+    //console.log(user)
     res.render('profile.ejs', {user: user})
     //res.status(200).json({
     //    message:'you need to login to see this'
@@ -109,9 +109,8 @@ exports.adminProfile = function(req, res){
 }
 
 exports.loginRequired = function(req, res, next){
-    //console.log(req.user)
+    //console.log('masuk')
     if (req.cookies.jewete){
-    console.log('cookie split :'+req.cookies.jewete.split(' '))
     jwt.verify(req.cookies.jewete.split(' ')[1], 'secret', function(err, decode){
         if (err) req.user = undefined
         req.user = decode
@@ -128,7 +127,7 @@ exports.loginRequired = function(req, res, next){
 }
 
 exports.isAdmin = function(req, res, next){
-    console.log(req.user)
+    //console.log(req.user)
     if(req.user.isAdmin === true){
         next()
     }else{

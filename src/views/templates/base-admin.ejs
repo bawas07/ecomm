@@ -1,0 +1,29 @@
+<head>
+
+    <% include ./templates/layout/head.ejs %>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            {% include ./templates/layout/nav.ejs %}
+
+            {% include ./templates/layout/sidebar.ejs %}
+        </nav>
+
+        <div id="page-wrapper">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <% include ./templateslayout/js.ejs %>
+
+</body>

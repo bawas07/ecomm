@@ -35,7 +35,7 @@ mongoose.connect('mongodb://localhost/ecommerce')
 
 // Check token jwt
 app.use(function(req, res, next){
-  console.log('cookie split :'+req.cookies.jewete.split(' '))
+  //console.log('cookie split :'+req.cookies.jewete.split(' '))
   if (req.cookies.jewete && req.cookies.jewete.split(' ')[0] === 'WIDI'){
         jwt.verify(req.cookies.jewete.split(' ')[1], 'secret', function(err, decode){
           if (err) req.user = undefined

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+    <title>Admin - ECommerce</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+        <% include admin-header %>
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6 col-md-offset-3">
+            <div class="well">
+                <h3><span class="fa fa-sign-in"></span>Add New Category</h3>
+                <!-- FORM -->
+                <form action='/admin/add-category' method='POST'>
+                    <div class='form-group'>
+                        <input type="text" class="form-control" name='brand'>
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg">Add</button>
+                </form>
+                <hr>
+                <p><a href="/admin">Back</a></p>
+            </div>
+        </div>
+    </body>
+</html>
