@@ -31,4 +31,6 @@ router.post('/signin', userController.signIn)
 
 router.get('/profile', userController.loginRequired ,userController.profile)
 
+router.get('/admin-profile', userController.loginRequired ,userController.isAdmin ,userController.adminProfile)
+
 module.exports = router

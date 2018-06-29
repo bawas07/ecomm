@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const user = require('./routes/user.route')
+const adminRoute = require('./routes/admin.route')
 var UserModel = require('./model/user.model')
 
 var app = express();
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users-router', usersRouter);
 app.use('/user', user)
+app.use('/admin', adminRoute)
 
 // setting MongoDB with Mongoose
 mongoose.Promise = global.Promise

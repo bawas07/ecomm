@@ -44,7 +44,7 @@ exports.signUp = function(req, res){
 }
 
 exports.signIn = function(req, res){
-    console.log(req.body)
+    //console.log(req.body)
     User.findOne({email: req.body.email})
     .exec()
     .then(function(user){
@@ -54,6 +54,7 @@ exports.signIn = function(req, res){
             //    failed: "invalid email"
             //})
         }
+        console.log(user)
         bcrypt.compare(req.body.password, user.password, function(err, result){
             if(err){
                 res.render('login.ejs', { message: 'Unauthorized access' })
@@ -61,6 +62,7 @@ exports.signIn = function(req, res){
                 //    failed: 'Unauthorized access'
                 //})
             }
+            
             if(result){
                 const JWTToken = jwt.sign({
                     email:user.email,
@@ -101,8 +103,14 @@ exports.profile = function(req, res){
     //})
 }
 
+exports.adminProfile = function(req, res){
+    const user = req.user
+    res.render('admin.profile.ejs', {user:user})
+}
+
 exports.loginRequired = function(req, res, next){
-    //console.log(req.user)if (req.cookies.jewete && req.cookies.jewete.split(' ')[0] === 'WIDI'){
+    //console.log(req.user)
+    if (req.cookies.jewete){
     console.log('cookie split :'+req.cookies.jewete.split(' '))
     jwt.verify(req.cookies.jewete.split(' ')[1], 'secret', function(err, decode){
         if (err) req.user = undefined
@@ -114,8 +122,16 @@ exports.loginRequired = function(req, res, next){
             return res.status(401).json({ message: 'Unauthorized user!' });
           }
       })
+    }else{
+        res.redirect('/user/signin')
+    }
 }
 
 exports.isAdmin = function(req, res, next){
-
+    console.log(req.user)
+    if(req.user.isAdmin === true){
+        next()
+    }else{
+        res.json({message: "you shall not pass!!!"})
+    }
 }
