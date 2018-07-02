@@ -29,7 +29,9 @@
                         <strong>Stock</strong>: <%= row.stock %><br>
                         <strong>Discount</strong>: <%= row.discount %><br>
                         <strong>tags</strong>: <%= row.tags %>
-                    </p>        
+                    </p>   
+                    <a href="/admin/edit-product/<%= row._id %>" class="btn btn-default btn-sm">Edit Product</a>   
+                    <a href="/admin/delete-product/<%= row._id %>" class="btn btn-default btn-sm">Delete Product</a>     
             </div>
         </div>
         <% }) %>

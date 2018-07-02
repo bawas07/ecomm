@@ -9,7 +9,7 @@ const Category = require('../model/category.model')
 exports.adminProfile = function(req, res){
     const user = req.user
     const category = req.category
-    res.render('admin-profile.ejs', {user:user, category:category})
+    res.render('admin-profile.ejs', {user:user, categoryMenu:category})
 }
 
 exports.adminLogin = function(req, res){

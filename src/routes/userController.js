@@ -97,7 +97,7 @@ exports.profile = function(req, res){
     const user = req.user
     // user.token = req.token
     //console.log(user)
-    res.render('profile.ejs', {user: user})
+    res.render('user/profile.ejs', {user: user, categoryMenu: req.category})
     //res.status(200).json({
     //    message:'you need to login to see this'
     //})
@@ -118,6 +118,7 @@ exports.loginRequired = function(req, res, next){
         if (decode) {
             next();
           } else {
+            res.clearCookie("jewete")
             return res.status(401).json({ message: 'Unauthorized user!' });
           }
       })

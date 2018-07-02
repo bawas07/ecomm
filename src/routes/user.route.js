@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../model/user.model')
 const userController = require('./userController')
+const adminController = require('./adminController')
 
 router.get('/signup', function(req, res, next) {
     res.render('signup.ejs', { message: '' })
@@ -29,8 +30,8 @@ router.get('/signin',function(req, res){
 
 router.post('/signin', userController.signIn)
 
-router.get('/profile', userController.loginRequired ,userController.profile)
+router.get('/profile', userController.loginRequired, adminController.getCategory, userController.profile)
 
-router.get('/admin-profile', userController.loginRequired ,userController.isAdmin ,userController.adminProfile)
+//router.get('/admin-profile', userController.loginRequired ,userController.isAdmin ,userController.adminProfile)
 
 module.exports = router

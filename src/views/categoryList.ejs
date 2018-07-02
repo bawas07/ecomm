@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <title>Admin - ECommerce</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+        <% include admin-header %>
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <%for (data of category) { %>
+        <div class="col-sm-6">
+            <div class="well">
+                <form action="/admin/edit-category" method="post">
+                    <input id="id" name="id" type="hidden" value=<%= data._id %>>
+                    <label>Brand Name</label>: <input id="id" name="brand" value= "<%- data.brand %>"> <br /> 
+                    <button type="submit" class="btn btn-default btn-sm">Change Brand</button>
+                    <a href="/admin/delete-category/<%= data._id %>" class="btn btn-default btn-sm">Delete Brand</a>
+                </form>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+
+</div>
+</body>
+</html>
