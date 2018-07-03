@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users-router', usersRouter);
-app.use('/user', user)
+app.use('/', user)
 app.use('/admin', adminRoute)
 
 // setting MongoDB with Mongoose

@@ -15,18 +15,33 @@
     <div class="row">
 
         <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
-
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.email %><br>
-                        <strong>is admin</strong>: <%= user.isAdmin %>
-                    </p>
-
+        <% product.forEach(function(row){ %>
+            <div class="col-sm-4">
+                <div class="well">
+                    
+                    
+                        <img src="<%= row.picture %>" alt="row.name" height="200" width="200" class="img-responsive center-block">
+                        <h4><span class="fa fa-times"></span><%= row.name %><span class="fa fa-times"></span></h4>
+                        <p>
+                            <strong>Price</strong>: <%= row.price %><br>
+                            <strong>Stock</strong>: <%= row.stock %><br>
+                            <strong>Discount</strong>: <%= row.discount %><br>
+                            <strong>tags</strong>: <%= row.tags %>
+                        </p> 
+                        <% if (row.stock === 0){ %> 
+                            No Stock!
+                        <% }else{ %>
+                            <form action="/add-cart/<%= user._id %>" method="post">
+                                <input id="product" name="product" type="hidden" value=<%= row._id %>>
+                                <input id="price" name="price" type="hidden" value=<%= row.price %>>
+                                <input id="discount" name="discount" type="hidden" value=<%= row.discount %>> 
+                                <button type="submit" class="btn btn-default btn-sm">Add to Cart!!</button>
+                            </form>
+                        <% } %>
+                         
+                </div>
             </div>
-        </div>
+            <% }) %>
 
     </div>
 </div>

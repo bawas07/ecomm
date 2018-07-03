@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const User = require('../model/user.model')
+const Product = require('../model/product.model')
 
 exports.signUp = function(req, res){
     //console.log('req.body')
@@ -26,7 +27,7 @@ exports.signUp = function(req, res){
                     })
                     user.save().then(function(result){
                         //console.log(result)
-                        res.redirect('/user/signin')
+                        res.redirect('/signin')
                         //res.status(200).json({
                         //    success: 'New user has been created'
                         //})
@@ -74,7 +75,7 @@ exports.signIn = function(req, res){
                     expiresIn: '2h'
                 })
                 res.cookie('jewete', 'WIDII '+JWTToken)
-                res.redirect('/user/profile')
+                res.redirect('/home')
                 //return res.status(200).json({
                 //    success: 'Welcome to the JWT Auth',
                 //    token: JWTToken
@@ -95,9 +96,16 @@ exports.signIn = function(req, res){
 
 exports.profile = function(req, res){
     const user = req.user
-    // user.token = req.token
-    //console.log(user)
-    res.render('user/profile.ejs', {user: user, categoryMenu: req.category})
+    Product.find({}, function(err, product){
+        if (err) {
+            res.status(500).json({
+                error:err
+            })
+        }
+        res.render('user/profile.ejs', {user: user, product:product, categoryMenu:req.category})
+        //res.status(200).json(product)
+    })
+    //res.render('user/profile.ejs', {user: user, categoryMenu: req.category})
     //res.status(200).json({
     //    message:'you need to login to see this'
     //})
@@ -119,11 +127,19 @@ exports.loginRequired = function(req, res, next){
             next();
           } else {
             res.clearCookie("jewete")
-            return res.status(401).json({ message: 'Unauthorized user!' });
+            return res.status(401).json({ message: 'Token expired please log in' });
           }
       })
     }else{
-        res.redirect('/user/signin')
+        res.redirect('/signin')
+    }
+}
+
+exports.isLoggedIn = function(req,res,next){
+    if (req.cookies.jewete){
+        res.redirect('/home')
+    }else{
+        next()
     }
 }
 

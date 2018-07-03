@@ -7,8 +7,9 @@ const jwt = require('jsonwebtoken')
 const User = require('../model/user.model')
 const userController = require('./userController')
 const adminController = require('./adminController')
+const transactionController = require('./transactionController')
 
-router.get('/signup', function(req, res, next) {
+router.get('/signup', userController.isLoggedIn, function(req, res, next) {
     res.render('signup.ejs', { message: '' })
   });
 
@@ -19,18 +20,20 @@ router.get('/logout', function(req, res){
 
 router.post('/signup', userController.signUp)
 
+router.post('/add-cart/:id', userController.loginRequired, transactionController.addCart)
+
 //router.post('/signup', function(req, res){
 //    console.log(req.body)
 //    res.json(req.body)
 //})
 
-router.get('/signin',function(req, res){
+router.get('/signin', userController.isLoggedIn, function(req, res){
         res.render('login.ejs', { message: '' })
 })
 
 router.post('/signin', userController.signIn)
 
-router.get('/profile', userController.loginRequired, adminController.getCategory, userController.profile)
+router.get('/home', userController.loginRequired, adminController.getCategory, userController.profile)
 
 //router.get('/admin-profile', userController.loginRequired ,userController.isAdmin ,userController.adminProfile)
 
