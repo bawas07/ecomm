@@ -9,7 +9,7 @@
         <span class="caret"></span></button>
         <ul class="dropdown-menu pull-right">
                 <% categoryMenu.forEach(function(row){ %>
-                    <li><a href="/admin/product/<%= row._id %>"><%= row.brand %></a></li>
+                    <li><a href="/category/<%= row._id %>"><%= row.brand %></a></li>
                 <% }) %>
         </ul>
     </div>

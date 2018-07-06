@@ -41,6 +41,8 @@ router.post('/signin', userController.signIn)
 
 router.get('/home', userController.loginRequired, adminController.getCategory, userController.getMessage ,userController.profile)
 
+router.get('/category/:id', userController.loginRequired, adminController.getCategory, userController.getProductId)
+
 //router.get('/admin-profile', userController.loginRequired ,userController.isAdmin ,userController.adminProfile)
 
 module.exports = router

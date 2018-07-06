@@ -6,10 +6,11 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../model/user.model')
 const Category = require('../model/category.model')
+const Paid = require('../model/paid.model')
 exports.adminProfile = function(req, res){
     const user = req.user
     const category = req.category
-    res.render('admin-profile.ejs', {user:user, categoryMenu:category})
+    res.render('admin-profile.ejs', {user:user, categoryMenu:category, msg:req.msg})
 }
 
 exports.adminLogin = function(req, res){
@@ -84,7 +85,15 @@ exports.getCategory = function(req, res, next){
                 error:err
             })
         }
-        req.category = category
-        next()
+        Paid.find({status:"not sent"}, function(err, res){
+            console.log(res)
+            if (res.length>0){
+                req.msg = "You have one or more un-managed order"
+            }else{
+                req.msg = ""
+            }
+            req.category = category
+            next()
+        })
     })
 }

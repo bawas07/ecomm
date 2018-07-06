@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 
 const paid = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    user: {type: mongoose.Schema.ObjectId, ref: 'User'},
+    user: {type: String, ref: 'User'},
     item: [{
-        product:{type: mongoose.Schema.ObjectId, ref: 'Product'},
+        product:{type: String, ref: 'Product'},
         price: {type: Number, require: true},
         discount: {type: Number}
     }],

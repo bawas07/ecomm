@@ -117,8 +117,9 @@ exports.addCart = function(req, res){
                     product:product,
                     price:price,
                     discount:discount,
-                    expired:expired
-                }]
+                    
+                }],
+                expired:expired
             })
             newCart.save(function(err){
                 if(err){

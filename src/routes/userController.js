@@ -112,6 +112,19 @@ exports.profile = function(req, res){
     //})
 }
 
+exports.getProductId = function (req,res){
+    const id = req.params.id
+    Product.find({category:id}, function(err, product){
+        if (err) {
+            res.status(500).json({
+                error:err
+            })
+        }
+        res.render('user/profile.ejs', {user: req.user, message:'', product:product, categoryMenu:req.category})
+        //res.json({product:product, category:req.category})
+    })
+}
+
 exports.adminProfile = function(req, res){
     const user = req.user
     res.render('admin.profile.ejs', {user:user})
