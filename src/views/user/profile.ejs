@@ -14,6 +14,9 @@
 
     <div class="row">
 
+        <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
         <!-- LOCAL INFORMATION -->
         <% product.forEach(function(row){ %>
             <div class="col-sm-4">

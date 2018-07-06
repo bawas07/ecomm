@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <title>ECommerce</title>
+    <% include user-head %>
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <% include user-header %>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="table-responsive">          
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="2">Item</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>New Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                    <% cart.item.forEach(function(row){ %>
+                                <% product.forEach(function(prod){ %>
+                                    <% if (row.product.toString() == prod._id.toString()){ %>
+                                        <tr>
+                                            <td><img src="<%= prod.picture %>" alt="<%= prod.name %>" height="50" width="50" class="img-responsive center-block"></td>
+                                            <td><%= prod.name %></td>
+                                            <td><%= row.price %></td>
+                                            <td><%= row.discount %>%</td>
+                                            <td><%= row.price*((100-row.discount)/100) %></td>
+                                            <td>
+                                            <form action="/delete-from-cart" method="post">
+                                                <input id="id" name="id" type="hidden" value=<%= cart._id %>>
+                                                <input id="item" name="item" type="hidden" value=<%= row._id %>>
+                                                <input id="product" name="product" type="hidden" value=<%= row.product %>> 
+                                                <button type="submit" class="btn btn-default btn-sm">Delete from cart</button>
+                                            </form>
+                                            <a href="/delete-from-cart/<%= row._id %>" class="btn btn-default btn-sm">Delete this item</a></td>
+                                        </tr>    
+                                    <% } %>
+                                <% }) %>
+                        <% }) %>
+                    <tr>
+                        <td colspan="4" align="right"><font size="4"><b>Total&nbsp;&nbsp;&nbsp;&nbsp;</b></font>(round)</td>
+                        <td><font size="4"><%= Math.floor(total) %></font></td>
+                        <td>
+                            <div class="btn-group">
+                            <a href="/delete-from-cart/<%= cart._id %>" class="btn btn-default btn-sm">Delete Cart</a>
+                            <a href="/pay-now/<%= cart._id %>" class="btn btn-default btn-sm">Pay now</a>
+                            <form action="/payment" method="post">
+                                <input id="amount" name="amount" type="hidden" value=<%= Math.floor(total)*100 %>>
+                                <input id="cartId" name="cartId" type="hidden" value=<%= cart._id %>>
+                                <script src="https://checkout.stripe.com/checkout.js"
+                                class = "stripe-button"
+                                data-key = "pk_test_Y7GnsU9LuAWTeynjNRKJjFRJ"
+                                data-amount="<%= Math.floor(total)*100 %>"
+                                data-name= "Pay now"
+                                data-description= "please fill the following form"
+                                data-locale="auto"
+                                data-currency="gbp"></script>
+                            </form>
+                            </div>
+                        </td>
+                    </tr>
+              </tbody>
+            </table>
+            </div>
+    </div>
+</div>
+</body>
+</html>

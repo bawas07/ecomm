@@ -1,11 +1,12 @@
 const express = require('express')
-const router = express.Router()
+// const router = express.Router()
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const User = require('../model/user.model')
 const Product = require('../model/product.model')
+const Message = require('../model/message.model')
 
 exports.signUp = function(req, res){
     //console.log('req.body')
@@ -102,7 +103,7 @@ exports.profile = function(req, res){
                 error:err
             })
         }
-        res.render('user/profile.ejs', {user: user, product:product, categoryMenu:req.category})
+        res.render('user/profile.ejs', {user: user, product:product, categoryMenu:req.category, message:req.message})
         //res.status(200).json(product)
     })
     //res.render('user/profile.ejs', {user: user, categoryMenu: req.category})
@@ -150,4 +151,22 @@ exports.isAdmin = function(req, res, next){
     }else{
         res.json({message: "you shall not pass!!!"})
     }
+}
+
+exports.getMessage = function(req, res, next){
+    const status = req.query.msg
+    Message.findOne({name:status}, function(err, msg){
+        if (err) {
+            res.status(500).json({
+                error:err
+            })
+        }
+        if(msg==undefined){
+            req.message=""
+            next()
+        }else{
+            req.message = msg.description
+            next()
+        }
+    })
 }
