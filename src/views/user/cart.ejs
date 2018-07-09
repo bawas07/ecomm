@@ -54,7 +54,6 @@
                         <td>
                             <div class="btn-group">
                             <a href="/delete-from-cart/<%= cart._id %>" class="btn btn-default btn-sm">Delete Cart</a>
-                            <a href="/pay-now/<%= cart._id %>" class="btn btn-default btn-sm">Pay now</a>
                             <form action="/payment" method="post">
                                 <input id="amount" name="amount" type="hidden" value=<%= Math.floor(total)*100 %>>
                                 <input id="cartId" name="cartId" type="hidden" value=<%= cart._id %>>
