@@ -11,6 +11,8 @@ const adminProduct = require('./adminProduct')
 
 router.post('/', adminController.adminLogin)
 
+router.post('/sent-item', userController.loginRequired, adminController.isAdmin, adminController.sentItem)
+
 router.get('/', adminController.isLoggedIn, function(req, res, next) {
     res.render('admin-login.ejs', { message: '' })
   });
@@ -18,6 +20,8 @@ router.get('/', adminController.isLoggedIn, function(req, res, next) {
 router.get('/add-category', userController.loginRequired, adminController.isAdmin, adminController.getCategory, function(req, res){
     res.render('addCategory.ejs', {categoryMenu:req.category})
 })
+
+router.get('/cart/:id', userController.loginRequired, adminController.isAdmin, adminController.getCategory, adminController.getCart)
 
 router.post('/add-category', userController.loginRequired, adminController.isAdmin, adminProduct.addCategory)
 

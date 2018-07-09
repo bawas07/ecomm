@@ -7,6 +7,49 @@ const jwt = require('jsonwebtoken')
 const User = require('../model/user.model')
 const Product = require('../model/product.model')
 const Cart = require('../model/cart.model')
+const Email = require('./sendEmail')
+
+exports.sendingEmail = function(req,res){
+    const userId = req.user._id
+    let total = 0
+    let temp = 0
+    Cart.findOne({user: userId}, function(err, cart){
+        if(!cart){
+            res.redirect('/')
+        }else{
+        if (err) {
+            console.log(err)
+            res.status(500).json({
+                error:err
+            })
+        }
+        for (item of cart.item){
+            temp = item.price*((100-item.discount)/100)
+            total = total + temp
+        }
+        Product.find({}, async function(err, prod){
+            if (err){
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            }
+            try{
+                await Email.sendreminder(cart, prod, total, req.user)
+                await res.redirect('/')
+            }catch(err){
+                console.log(err)
+                res.status(500).json({
+                    error:err
+                })
+            }
+            //res.json({cart:cart, product:prod, total:total, user:req.user})
+            
+        })}
+        //res.json(cart)
+    })
+    // res.json(req.user)
+}
 
 exports.seeCart = function(req,res){
     const userId = req.user._id

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <title>See Cart - ECommerce</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <% include admin-header %>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6 col-md-offset-3">
+            <div class="well">
+                    <p>
+                        <strong>Order No</strong>: <%= paid._id %><br>
+                        <strong>Buyer Id</strong>: <%= paid.user %><br>
+                        <strong>Status</strong>: <%= paid.status %><br>
+                        <% if (paid.status == "not sent"){ %>
+                        <form action="/admin/sent-item" method="post">
+                            <input id="id" name="id" type="hidden" value=<%= paid._id %>>
+                            <button type="submit" class="btn btn-default btn-sm">Have you sent this item?</button>
+                        </form>
+                        <% } %>
+                    </p>
+
+            </div>
+        </div>
+        <div class="table-responsive">          
+            <table class="table">
+              <thead>
+                <tr>
+                  <th colspan="2">Item</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>Paid</th>
+                </tr>
+              </thead>
+              <tbody>
+                    <% paid.item.forEach(function(row){ %>
+                                <% product.forEach(function(prod){ %>
+                                    <% if (row.product.toString() == prod._id.toString()){ %>
+                                        <tr>
+                                            <td><img src="<%= prod.picture %>" alt="<%= prod.name %>" height="50" width="50" class="img-responsive center-block"></td>
+                                            <td><%= prod.name %></td>
+                                            <td><%= row.price %></td>
+                                            <td><%= row.discount %>%</td>
+                                            <td><%= row.price*((100-row.discount)/100) %></td>
+                                        </tr>    
+                                    <% } %>
+                                <% }) %>
+                        <% }) %>
+              </tbody>
+            </table>
+            </div>
+    </div>
+</div>
+</body>
+</html>

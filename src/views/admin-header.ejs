@@ -1,16 +1,25 @@
 <div class="page-header text-center">
-    <h1><span class="fa fa-anchor"></span> Profile Page For Admin</h1>
-    <div class="btn-group dropdown">
+    <h1><a href="/admin/"><span class="fa fa-anchor"></span></a>Profile Page For Admin</h1>
     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     <a href="/admin/add-category" class="btn btn-default btn-sm">Add Category</a>
     <a href="/admin/category-list" class="btn btn-default btn-sm">All Category</a>
     <a href="/admin/add-product" class="btn btn-default btn-sm">Add Product</a>
+    <div class="btn-group dropdown">
     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Product List
         <span class="caret"></span></button>
         <ul class="dropdown-menu pull-right">
             <li><a href="/admin/product-list/">All Product</a></li>
                 <% categoryMenu.forEach(function(row){ %>
                     <li><a href="/admin/product/<%= row._id %>"><%= row.brand %></a></li>
+                <% }) %>
+        </ul>
+    </div>
+    <div class="btn-group dropdown">
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Cart List
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu pull-right">
+                <% cart.forEach(function(row){ %>
+                    <li><a href="/admin/cart/<%= row._id %>"><%= row._id %></a></li>
                 <% }) %>
         </ul>
     </div>

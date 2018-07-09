@@ -60,6 +60,7 @@
                                 <input id="cartId" name="cartId" type="hidden" value=<%= cart._id %>>
                                 <script src="https://checkout.stripe.com/checkout.js"
                                 class = "stripe-button"
+                                data-email = "<%= user.email %>""
                                 data-key = "pk_test_Y7GnsU9LuAWTeynjNRKJjFRJ"
                                 data-amount="<%= Math.floor(total)*100 %>"
                                 data-name= "Pay now"

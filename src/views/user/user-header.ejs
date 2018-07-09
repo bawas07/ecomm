@@ -2,9 +2,7 @@
     <h1><span class="fa fa-anchor"></span> Welcome, <%= user.email %></h1>
     <div class="btn-group dropdown">
     <a href="/home" class="btn btn-default btn-sm">Home</a>
-    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     <a href="/cart" class="btn btn-default btn-sm">See Cart</a>
-    <a href="#" class="btn btn-default btn-sm">All Category</a>
     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Based on Category
         <span class="caret"></span></button>
         <ul class="dropdown-menu pull-right">
@@ -12,5 +10,6 @@
                     <li><a href="/category/<%= row._id %>"><%= row.brand %></a></li>
                 <% }) %>
         </ul>
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 </div>

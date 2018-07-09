@@ -43,6 +43,4 @@ router.get('/home', userController.loginRequired, adminController.getCategory, u
 
 router.get('/category/:id', userController.loginRequired, adminController.getCategory, userController.getProductId)
 
-//router.get('/admin-profile', userController.loginRequired ,userController.isAdmin ,userController.adminProfile)
-
 module.exports = router

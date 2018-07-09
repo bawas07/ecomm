@@ -16,7 +16,7 @@ exports.getAddProduct = function(req, res){
         if (req.query.status == "false"){
             message = "please fill starred field"
         }
-        res.render('addProduct.ejs', {categoryMenu:category, message: message})
+        res.render('addProduct.ejs', {categoryMenu:category, message: message, cart:req.cart})
     })
 }
 
@@ -28,7 +28,7 @@ exports.getProductId = function (req,res){
                 error:err
             })
         }
-        res.render('productListItem.ejs', {product:product, categoryMenu:req.category})
+        res.render('productListItem.ejs', {product:product, categoryMenu:req.category, cart:req.cart})
         //res.json({product:product, category:req.category})
     })
 }
@@ -124,7 +124,7 @@ exports.getEditProduct = function(req, res){
                 error:err
             })
         }
-        res.render('getEditProduct.ejs', {product:product, categoryMenu:req.category})
+        res.render('getEditProduct.ejs', {product:product, categoryMenu:req.category, cart:req.cart})
     })
 }
 
@@ -136,7 +136,7 @@ exports.getEditCategory = function(req, res){
                 error:err
             })
         }
-        res.json({category:category, categoryMenu:req.category})
+        res.json({category:category, categoryMenu:req.category, cart:req.cart})
         //res.render('getEditCategory.ejs', {category:category, categoryMenu:req.category})
     })
 }
@@ -148,7 +148,7 @@ exports.productList = function(req,res){
                 error:err
             })
         }
-        res.render('productList.ejs', {product:product, categoryMenu:req.category})
+        res.render('productList.ejs', {product:product, categoryMenu:req.category, cart:req.cart})
         //res.status(200).json(product)
     })
 }
@@ -172,7 +172,7 @@ exports.categoryList = function(req,res){
                 error:err
             })
         }
-        res.render('categoryList.ejs', {category:category, categoryMenu:req.category})
+        res.render('categoryList.ejs', {category:category, categoryMenu:req.category, cart:req.cart})
     })
 }
 

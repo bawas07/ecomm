@@ -7,10 +7,33 @@ const jwt = require('jsonwebtoken')
 const User = require('../model/user.model')
 const Category = require('../model/category.model')
 const Paid = require('../model/paid.model')
+const Product = require('../model/product.model')
+
+exports.sentItem = async function(req, res){
+    const id = req.body.id
+    await Paid.findOneAndUpdate({_id:id}, {status: "Item in this cart has been sent"})
+    res.redirect("/admin/cart/"+id)
+}
+
+exports.getCart = async function(req, res){
+    const id = req.params.id
+    const category = req.category
+    try{
+        const paid = await Paid.findOne({_id:id})
+        const product = await Product.find({})
+        //res.json({product:product, paid:paid, user:req.user, categoryMenu:category, msg:req.msg, cart:req.cart})
+        res.render('admin-cart.ejs', {product:product, paid:paid, user:req.user, categoryMenu:category, msg:req.msg, cart:req.cart})
+    }catch(err){
+        console.log(err)
+        res.status(500).json({error:err})
+    }
+    
+}
+
 exports.adminProfile = function(req, res){
     const user = req.user
     const category = req.category
-    res.render('admin-profile.ejs', {user:user, categoryMenu:category, msg:req.msg})
+    res.render('admin-profile.ejs', {user:user, categoryMenu:category, msg:req.msg, cart:req.cart})
 }
 
 exports.adminLogin = function(req, res){
@@ -50,9 +73,16 @@ exports.adminLogin = function(req, res){
     })
 }
 
-exports.isAdmin = function(req, res, next){
+exports.isAdmin = async function(req, res, next){
     //console.log(req.user)
     if(req.user.isAdmin === true){
+        cart = await Paid.find({status:'not sent'})
+        if (cart.length > 0){
+            req.msg = "You have one or more un-managed order"
+        }else{
+            req.msg = ""
+        }
+        req.cart = cart
         next()
     }else{
         res.json({message: "you shall not pass!!!"})
@@ -85,15 +115,7 @@ exports.getCategory = function(req, res, next){
                 error:err
             })
         }
-        Paid.find({status:"not sent"}, function(err, res){
-            console.log(res)
-            if (res.length>0){
-                req.msg = "You have one or more un-managed order"
-            }else{
-                req.msg = ""
-            }
-            req.category = category
-            next()
-        })
+        req.category = category
+        next()
     })
 }
